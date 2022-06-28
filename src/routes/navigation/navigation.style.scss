@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 32px;
+  margin-bottom: 16px;
+  // background-color: #000;
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .nav-item {
+      font-size: 16px;
+
+      color: #000;
+    }
+  }
+}
