@@ -10,8 +10,8 @@ const CategoryItem = ({ category: { title, imageUrl } }) => {
         }}
       ></div>
       <div className="category-body-container">
-        <h2 className="category category-title">{title}</h2>
-        <p className="category category-subTitle">Shop now</p>
+        <h2 className="category category-title highlight">{title}</h2>
+        <p className="category category-subTitle highlight">Shop now</p>
       </div>
     </div>
   );

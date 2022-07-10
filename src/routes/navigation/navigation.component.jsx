@@ -9,7 +9,7 @@ const Navigation = () => {
   const optionsNavegation = [
     { name: 'SHOP', location: 'shop' },
     { name: 'CONTACT', location: '#' },
-    { name: 'SIGN IN', location: 'sign-in' },
+    { name: 'SIGN IN', location: 'auth' },
     { name: 'ICON', location: '#' },
   ];
 

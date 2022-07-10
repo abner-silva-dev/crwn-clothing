@@ -45,6 +45,7 @@
     height: 100%;
     background-size: cover;
     background-position: center;
+    z-index: -999;
   }
 
   .category-body-container {
@@ -55,14 +56,7 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-
-    .category {
-      background: linear-gradient(to top left, #39b385, #9be15d);
-      color: #fff;
-      transform: skewX(-0.06turn);
-      display: block;
-      margin: 0;
-    }
+    color: #fff;
 
     .category-title {
       padding: 10px;
@@ -73,4 +67,21 @@
       font-size: 16px;
     }
   }
+}
+
+.highlight {
+  position: relative;
+}
+
+.highlight::after {
+  display: inline-block;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  transform: scale(1.07, 1.05) skewX(-15deg);
+  background: linear-gradient(to top left, #39b385, #9be15d);
 }

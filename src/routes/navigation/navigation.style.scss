@@ -4,6 +4,44 @@
   padding: 32px;
   margin-bottom: 16px;
   // background-color: #000;
+
+  .logo-container {
+    position: relative;
+  }
+
+  .logo-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    border-radius: 50%;
+    background: linear-gradient(
+      to top left,
+      rgba(57, 179, 132, 0.161),
+      rgba(154, 225, 93, 0.396)
+    );
+    z-index: -1;
+  }
+  .logo-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200%;
+    height: 200%;
+    border-radius: 50%;
+    background: linear-gradient(
+      to top left,
+      rgba(57, 179, 132, 0.173),
+      rgba(154, 225, 93, 0.212)
+    );
+    z-index: -1;
+  }
+
   .nav {
     display: flex;
     align-items: center;
@@ -11,8 +49,9 @@
 
     .nav-item {
       font-size: 16px;
+      font-weight: 600;
 
-      color: #000;
+      color: rgb(72, 72, 72);
     }
   }
 }

@@ -4,6 +4,8 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from 'firebase/auth';
 
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -22,19 +24,33 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 // instance for sign in with google
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
 // settings about of how make the things
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
   prompt: 'select_account',
 });
 
+//make a tracing about of a our application
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 
+//render pop up of google
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
+
+//redirect a new window of google
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
+
+//contains information of dabase firestore
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async userAuth => {
+//function allow create user
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInformation = {}
+) => {
+  if (!userAuth) return;
   const userDocRef = doc(db, 'users', userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
 
@@ -47,6 +63,7 @@ export const createUserDocumentFromAuth = async userAuth => {
         displayName,
         email,
         createDate,
+        ...additionalInformation,
       });
     } catch (error) {
       console.log('Error :', error.message);
@@ -55,3 +72,25 @@ export const createUserDocumentFromAuth = async userAuth => {
 
   return userDocRef;
 };
+
+//function create an auth of user
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password);
+};
+
+// export const getCollectionData = async (collection, docC) => {
+//   const docRef = doc(db, collection, docC);
+//   const docSnap = await getDoc(docRef);
+
+//   if (docSnap.exists()) {
+//     console.log('Document data:', docSnap.data());
+//   } else {
+//     console.log('No such document!');
+//   }
+// };
