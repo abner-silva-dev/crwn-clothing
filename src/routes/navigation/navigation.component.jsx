@@ -1,31 +1,41 @@
 import { Link, Outlet } from 'react-router-dom';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
+import { UserContext } from '../../contexs/user.context';
 import './navigation.style.scss';
+import { signOutUser } from '../../utils/firebase/firebase.util';
+import CartIcon from '../../components/cart-icon/cart-icon.component';
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
+
+const optionsNavegation = [
+  { name: 'SHOP', location: 'shop' },
+  { name: 'CONTACT', location: '#' },
+  { name: 'SIGN IN', location: 'auth' },
+  { name: 'ICON', location: '#' },
+];
+let allItems;
 
 const Navigation = () => {
-  let AllItems;
+  const { currentUser } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const optionsNavegation = [
-    { name: 'SHOP', location: 'shop' },
-    { name: 'CONTACT', location: '#' },
-    { name: 'SIGN IN', location: 'auth' },
-    { name: 'ICON', location: '#' },
-  ];
+  const signOutHandler = async () => {
+    await signOutUser();
+  };
 
   useEffect(() => {
-    AllItems = [...document.querySelectorAll('.nav-item')];
-  }, []);
+    allItems = [...document.querySelectorAll('.nav-item')];
+  }, [currentUser]);
 
   const handlerChangeOption = e => {
     const currentItem = e.target.closest('.nav-item');
     if (!currentItem) return;
-    AllItems.forEach(item => (item.style.opacity = 0.5));
+    allItems.forEach(item => (item.style.opacity = 0.5));
     currentItem.style.opacity = 1;
   };
 
   const handlerGetBackNormal = e => {
-    AllItems.forEach(item => (item.style.opacity = 1));
+    allItems.forEach(item => (item.style.opacity = 1));
   };
 
   return (
@@ -39,12 +49,38 @@ const Navigation = () => {
           onMouseOver={handlerChangeOption}
           onMouseOut={handlerGetBackNormal}
         >
-          {optionsNavegation.map((item, i) => (
-            <Link key={i} className="nav-item" to={item.location}>
-              {item.name}
-            </Link>
-          ))}
+          {optionsNavegation.map((item, i) => {
+            if (currentUser && item.name === 'SIGN IN') {
+              return (
+                <span
+                  key={i}
+                  className="nav-item sign-out"
+                  onClick={signOutHandler}
+                >
+                  SIGN OUT
+                </span>
+              );
+            } else {
+              return item.name === 'ICON' ? (
+                <Link
+                  key={i}
+                  className="nav-item"
+                  to={item.location}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                >
+                  <CartIcon />
+                </Link>
+              ) : (
+                <Link key={i} className="nav-item" to={item.location}>
+                  {item.name}
+                </Link>
+              );
+            }
+          })}
         </nav>
+        {isOpen ? <CartDropdown /> : ''}
       </header>
       <Outlet />
     </Fragment>

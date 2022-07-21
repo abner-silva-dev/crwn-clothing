@@ -33,13 +33,11 @@
   }
 
   &.inverted {
-    background-color: white;
-    color: black;
-    border: 1px solid black;
+    background: linear-gradient(to top left, #39b385, #9be15d);
+    color: white;
 
     &:hover {
-      background-color: black;
-      color: white;
+      background: linear-gradient(to top left, #3be9a6, #8cb866);
       border: none;
     }
   }

@@ -50,8 +50,12 @@
     .nav-item {
       font-size: 16px;
       font-weight: 600;
+      cursor: pointer;
 
       color: rgb(72, 72, 72);
+    }
+    .sign-out {
+      color: #a61e4d;
     }
   }
 }

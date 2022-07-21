@@ -5,7 +5,7 @@ import {
   signInAuthUserWithEmailAndPassword,
 } from '../../utils/firebase/firebase.util';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Button from '../../components/button/button.component';
 import FormInput from '../form-input/form-input.component';
 import './sing-in-form.style.scss';
@@ -28,8 +28,7 @@ const SignInForm = ({ setStatusAlert }) => {
   const handlerSubmit = async event => {
     event.preventDefault();
     try {
-      const res = await signInAuthUserWithEmailAndPassword(email, password);
-      console.log(res);
+      await signInAuthUserWithEmailAndPassword(email, password);
     } catch (err) {
       switch (err.code) {
         case 'auth/wrong-password':
@@ -61,8 +60,7 @@ const SignInForm = ({ setStatusAlert }) => {
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    signInWithGooglePopup();
   };
 
   return (

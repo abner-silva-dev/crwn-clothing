@@ -1,0 +1,9 @@
+.product-container {
+  max-width: 130rem;
+  padding: 0 2rem;
+  margin: 4rem auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2rem;
+  row-gap: 4rem;
+}

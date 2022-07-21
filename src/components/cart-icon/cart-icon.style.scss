@@ -1,0 +1,19 @@
+.icon-container {
+  position: relative;
+
+  .shopping-icon {
+    width: 3rem;
+    width: 3rem;
+    stroke: #69db7c;
+    fill: #69db7c;
+  }
+  .number-articles {
+    color: #a61e4d;
+    font-weight: 700;
+
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
