@@ -80,7 +80,7 @@ const Navigation = () => {
             }
           })}
         </nav>
-        {isOpen ? <CartDropdown /> : ''}
+        {isOpen ? <CartDropdown setIsOpen={setIsOpen} /> : ''}
       </header>
       <Outlet />
     </Fragment>
