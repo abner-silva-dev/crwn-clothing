@@ -1,8 +1,9 @@
-import './authtentication.style.scss';
 import SingUpForm from '../../components/sing-up-form/sing-up-form.component';
 import SignInForm from '../../components/sing-in-form/sing-in-form.component';
 import AlertPopUp from '../../components/alert-pop-up/alert-pop-up.component';
 import { useState } from 'react';
+
+import './authtentication.style.scss';
 
 const alertPopUpDefault = {
   isOpen: false,

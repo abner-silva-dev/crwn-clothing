@@ -1,9 +1,8 @@
 .container-forms {
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 100rem;
+  padding: 0 2rem;
+  margin: 4rem auto 6rem;
   display: grid;
   grid-template-columns: 45fr 55fr;
-  column-gap: 30px;
-  margin-top: 4rem;
-  margin-bottom: 6rem;
+  column-gap: 3rem;
 }
