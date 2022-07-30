@@ -145,12 +145,23 @@ footer {
   .grid-colum--4 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  .cart-dropdown-container {
-    width: 20rem !important;
-  }
 }
 @media (max-width: 28em) {
+  html {
+    font-size: 50%;
+  }
+
+  .logo-container {
+    height: 4rem;
+    width: 4rem;
+  }
+
   .grid-colum--4 {
     grid-template-columns: repeat(1, 1fr) !important;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 2rem;
   }
 }

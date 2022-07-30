@@ -7,6 +7,11 @@
 
   .logo-container {
     position: relative;
+
+    .logo {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .logo-container::after {
@@ -45,10 +50,10 @@
   .nav {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 2rem;
 
     .nav-item {
-      font-size: 16px;
+      font-size: 1.6rem;
       font-weight: 600;
       cursor: pointer;
 
