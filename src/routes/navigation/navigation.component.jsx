@@ -1,11 +1,16 @@
 import { Link, Outlet } from 'react-router-dom';
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
+
 import { UserContext } from '../../contexs/user.context';
-import './navigation.style.scss';
-import { signOutUser } from '../../utils/firebase/firebase.util';
+import { CartContext } from '../../contexs/cart.context';
+
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
+
+import { signOutUser } from '../../utils/firebase/firebase.util';
+
+import './navigation.style.scss';
 
 const optionsNavegation = [
   { name: 'SHOP', location: 'shop' },
@@ -17,7 +22,7 @@ let allItems;
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpenCartDropDown, setIsOpenCartDropDown } = useContext(CartContext);
 
   const signOutHandler = async () => {
     await signOutUser();
@@ -67,7 +72,7 @@ const Navigation = () => {
                   className="nav-item"
                   to={item.location}
                   onClick={() => {
-                    setIsOpen(!isOpen);
+                    setIsOpenCartDropDown(!isOpenCartDropDown);
                   }}
                 >
                   <CartIcon />
@@ -80,7 +85,7 @@ const Navigation = () => {
             }
           })}
         </nav>
-        {isOpen ? <CartDropdown setIsOpen={setIsOpen} /> : ''}
+        {isOpenCartDropDown ? <CartDropdown /> : ''}
       </header>
       <Outlet />
     </Fragment>

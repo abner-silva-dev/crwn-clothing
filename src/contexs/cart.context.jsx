@@ -1,7 +1,43 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useReducer } from 'react';
+import { createAction } from '../utils/reducer/reducer.utils';
 
 export const CartContext = createContext();
 
+//options in function reducer
+export const CART_ACTION_TYPES = {
+  SET_CART_ITEMS: 'SET_CART_ITEMS',
+  SET_IS_CART_OPEN: 'SET_IS_CART_OPEN',
+};
+
+//initial state
+const INITIAL_STATE = {
+  cartItems: [],
+  totalProducts: 0,
+  totalProductsPrice: 0,
+  isOpenCartDropDown: false,
+};
+
+//reducer function
+const cartReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case 'SET_CART_ITEMS':
+      return {
+        ...state,
+        ...payload,
+      };
+    case 'SET_IS_CART_OPEN':
+      return {
+        ...state,
+        ...payload,
+      };
+    default:
+      throw new Error(`unhanled type of ${type} in cartReducer`);
+  }
+};
+
+//helper functions
 const addCartItem = (productToAdd, products) => {
   const existProduct = products.find(el => el.id === productToAdd.id);
 
@@ -12,43 +48,58 @@ const addCartItem = (productToAdd, products) => {
   return [...products];
 };
 
-export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [totalProducts, setTotalProducts] = useState(0);
-  const [totalProductsPrice, setTotalProductsPrice] = useState(0);
+const removeCartItem = (productToRemove, products) => {
+  const indexProduct = products.findIndex(el => el.id === productToRemove.id);
 
-  useEffect(() => {
-    const totalQuantity = cartItems.reduce(
+  if (!(indexProduct > -1)) return;
+  products.splice(indexProduct, 1);
+
+  return [...products];
+};
+
+//provider
+export const CartProvider = ({ children }) => {
+  const [
+    { cartItems, totalProducts, totalProductsPrice, isOpenCartDropDown },
+    dispatch,
+  ] = useReducer(cartReducer, INITIAL_STATE);
+
+  const setIsOpenCartDropDown = (open = false) => {
+    dispatch(
+      createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, {
+        isOpenCartDropDown: open,
+      })
+    );
+  };
+
+  const updateCartItemsReducer = newCartItems => {
+    const totalQuantity = newCartItems.reduce(
       (acc, product) => acc + product.quantity,
       0
     );
 
-    setTotalProducts(totalQuantity);
-  }, [cartItems]);
-
-  useEffect(() => {
-    const ProductsPrice = cartItems.reduce(
+    const ProductsPrice = newCartItems.reduce(
       (acc, el) => acc + el.quantity * el.price,
       0
     );
 
-    setTotalProductsPrice(ProductsPrice);
-  }, [cartItems]);
+    dispatch(
+      createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
+        cartItems: newCartItems,
+        totalProducts: totalQuantity,
+        totalProductsPrice: ProductsPrice,
+      })
+    );
+  };
 
   // add product to cartItems
   const addItemToCart = productToAdd => {
-    setCartItems(addCartItem(productToAdd, cartItems));
+    updateCartItemsReducer(addCartItem(productToAdd, cartItems));
   };
 
   // remove product of cartItem
-  const removeItemToCart = product => {
-    const indexProduct = cartItems.findIndex(el => el.id === product.id);
-
-    if (!(indexProduct > -1)) return;
-
-    cartItems.splice(indexProduct, 1);
-
-    setCartItems([...cartItems]);
+  const removeItemToCart = productToRemove => {
+    updateCartItemsReducer(removeCartItem(productToRemove, cartItems));
   };
 
   //increase the quantity product in 1
@@ -57,7 +108,7 @@ export const CartProvider = ({ children }) => {
     if (!existProduct) return;
     existProduct.quantity += 1;
 
-    setCartItems([...cartItems]);
+    updateCartItemsReducer([...cartItems]);
   };
 
   //decrease the quantity product in 1
@@ -68,7 +119,7 @@ export const CartProvider = ({ children }) => {
 
     existProduct.quantity -= 1;
 
-    setCartItems([...cartItems]);
+    updateCartItemsReducer([...cartItems]);
   };
 
   const value = {
@@ -79,6 +130,8 @@ export const CartProvider = ({ children }) => {
     restProduct,
     removeItemToCart,
     totalProductsPrice,
+    isOpenCartDropDown,
+    setIsOpenCartDropDown,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

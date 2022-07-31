@@ -6,13 +6,13 @@ import Button from '../button/button.component';
 import CartItem from '../cart-item/cart-item.component';
 import './cart-dropdown.style.scss';
 
-const CartDropdown = ({ setIsOpen }) => {
-  const { cartItems } = useContext(CartContext);
+const CartDropdown = () => {
+  const { cartItems, setIsOpenCartDropDown } = useContext(CartContext);
   const navigate = useNavigate();
 
   const goToCheckoutHandler = () => {
     navigate('/checkout');
-    setIsOpen(false);
+    setIsOpenCartDropDown(false);
   };
 
   return (

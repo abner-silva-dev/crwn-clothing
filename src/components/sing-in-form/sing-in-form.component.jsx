@@ -55,7 +55,6 @@ const SignInForm = ({ setStatusAlert }) => {
             message: 'error',
           });
       }
-      console.log(err);
     }
   };
 
