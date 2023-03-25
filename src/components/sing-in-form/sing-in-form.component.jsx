@@ -59,7 +59,7 @@ const SignInForm = ({ setStatusAlert }) => {
   };
 
   const signInWithGoogle = async () => {
-    signInWithGooglePopup();
+    await signInWithGooglePopup();
   };
 
   return (

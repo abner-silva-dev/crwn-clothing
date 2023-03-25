@@ -70,7 +70,6 @@ export const addCollectionAndDocuments = async (
   });
 
   await batch.commit();
-  console.log('done');
 };
 
 export const getCategoriesAndDocuments = async () => {
@@ -132,14 +131,3 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = callback =>
   onAuthStateChanged(auth, callback);
-
-// export const getCollectionData = async (collection, docC) => {
-//   const docRef = doc(db, collection, docC);
-//   const docSnap = await getDoc(docRef);
-
-//   if (docSnap.exists()) {
-//     console.log('Document data:', docSnap.data());
-//   } else {
-//     console.log('No such document!');
-//   }
-// };

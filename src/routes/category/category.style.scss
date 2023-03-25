@@ -1,0 +1,7 @@
+.text-center .secondary-header {
+  pointer-events: none;
+
+  &:hover {
+    opacity: 1;
+  }
+}
