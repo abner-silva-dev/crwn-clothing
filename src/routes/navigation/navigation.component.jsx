@@ -1,9 +1,10 @@
 import { Link, Outlet } from 'react-router-dom';
 import { Fragment, useContext, useEffect } from 'react';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
+import { useSelector } from 'react-redux';
 
-import { UserContext } from '../../contexs/user.context';
 import { CartContext } from '../../contexs/cart.context';
+import { selectCurrentUser } from '../../store/user/user.selector';
 
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
@@ -21,7 +22,7 @@ const optionsNavegation = [
 let allItems;
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector(selectCurrentUser);
   const { isOpenCartDropDown, setIsOpenCartDropDown } = useContext(CartContext);
 
   const signOutHandler = async () => {

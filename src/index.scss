@@ -122,6 +122,17 @@ footer {
   }
 }
 
+.section {
+  // opacity: 1;
+  // transform: translateY(0);
+  transition: transform 1.5s, opacity 1.5s;
+}
+
+.section--hidden {
+  opacity: 0;
+  transform: translateY(8rem);
+}
+
 @media (max-width: 66em) {
   .grid-colum--4 {
     grid-template-columns: repeat(3, 1fr) !important;

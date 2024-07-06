@@ -4,14 +4,17 @@ import {
   onAuthStateChangedListener,
 } from './utils/firebase/firebase.util';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+
 import Home from './routes/home/home.component';
 import Navigation from './routes/navigation/navigation.component';
 import Authtentication from './routes/authtentication/authtentication.component';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
-import { setCurrentUser, getCurretUser } from './store/slice/user/sliceUser';
+
+import { setCurrentUser } from './store/user/user.action';
+import RevelSection from './components/revel-section/revel-section.component';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -22,10 +25,10 @@ const App = () => {
         createUserDocumentFromAuth(user);
       }
 
-      dispatch(getCurretUser(user));
+      dispatch(setCurrentUser(user));
     });
     return unsubscribe;
-  }, [dispatch]);
+  }, []);
 
   return (
     <Routes>
@@ -34,6 +37,7 @@ const App = () => {
         <Route path="shop/*" element={<Shop />} />
         <Route path="auth" element={<Authtentication />} />
         <Route path="checkout" element={<Checkout />} />
+        <Route path="/*" element={<h1>Not found 404</h1>} />
       </Route>
     </Routes>
   );

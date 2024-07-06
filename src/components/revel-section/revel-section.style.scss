@@ -1,0 +1,8 @@
+.section {
+  transition: transform 1.5s, opacity 1.5s;
+
+  &--hiden {
+    opacity: 0;
+    transform: translateY(8rem);
+  }
+}

@@ -1,5 +1,6 @@
 import './directory.style.scss';
 import DirectoryItem from '../directory-item/directory-item.component';
+import RevelSection from '../revel-section/revel-section.component';
 
 const categories = [
   {
@@ -36,11 +37,13 @@ const categories = [
 
 const DirectoryContainer = () => {
   return (
-    <div className="directory-container">
-      {categories.map(category => (
-        <DirectoryItem key={category.id} category={category} />
-      ))}
-    </div>
+    <RevelSection>
+      <div className="directory-container">
+        {categories.map(category => (
+          <DirectoryItem key={category.id} category={category} />
+        ))}
+      </div>
+    </RevelSection>
   );
 };
 
